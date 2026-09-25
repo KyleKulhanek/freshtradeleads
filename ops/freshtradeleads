@@ -1,0 +1,6 @@
+#!/bin/sh
+set -a
+. /etc/freshtradeleads.env
+set +a
+exec /opt/freshtradeleads/.venv/bin/freshtradeleads "$@"
+

@@ -1,0 +1,18 @@
+[Unit]
+Description=FreshTradeLeads nightly campaign report
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/freshtradeleads
+EnvironmentFile=/etc/freshtradeleads/campaign-report.env
+ExecStart=/opt/freshtradeleads/.venv/bin/python -m freshtradeleads.campaign_report
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/freshtradeleads/data/processed/campaign-reports
+NoNewPrivileges=true
+LockPersonality=true

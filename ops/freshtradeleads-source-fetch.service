@@ -1,0 +1,20 @@
+[Unit]
+Description=Fetch and import the latest official CSLB master-license dataset
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+WorkingDirectory=/opt/freshtradeleads
+EnvironmentFile=/etc/freshtradeleads.env
+ExecStart=/opt/freshtradeleads/.venv/bin/freshtradeleads --json source fetch
+TimeoutStartSec=30min
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/freshtradeleads/data
+

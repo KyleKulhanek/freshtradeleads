@@ -1,0 +1,25 @@
+[Unit]
+Description=FreshTradeLeads Stripe sandbox webhook forwarder
+After=network-online.target freshtradeleads-web.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+Environment=HOME=/home/deploy
+ExecStart=/usr/local/bin/stripe listen --project-name FreshTradeLeads --events checkout.session.completed,checkout.session.expired,checkout.session.async_payment_succeeded,checkout.session.async_payment_failed --forward-to http://127.0.0.1:8080/webhooks/stripe
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/deploy/.config/stripe
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily check for a new CSLB master-license snapshot
+
+[Timer]
+OnCalendar=*-*-* 13:15:00 America/Los_Angeles
+RandomizedDelaySec=15m
+Persistent=true
+Unit=freshtradeleads-source-fetch.service
+
+[Install]
+WantedBy=timers.target
+
